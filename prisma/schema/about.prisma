@@ -1,0 +1,12 @@
+model About {
+  id        Int     @id @default(1)
+
+  image         String
+  title         String
+  description   String
+  experience    Int?
+  totalProjects Int?
+  happyClients  Int?
+
+  updatedAt DateTime @updatedAt
+}

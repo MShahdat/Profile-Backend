@@ -1,0 +1,12 @@
+
+
+model SkillCategory {
+  id Int @id @default(autoincrement())
+  type String
+  icon String?
+  order Int @default(0)
+
+  updatedAt DateTime @updatedAt
+
+  skill Skill[]
+}

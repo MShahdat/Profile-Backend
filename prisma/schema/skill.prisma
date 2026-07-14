@@ -1,0 +1,15 @@
+model Skill {
+  id            Int           @id @default(autoincrement())
+  categoryId    Int
+  skillCategory SkillCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  name     String  @unique
+  level    Int
+  icon     String
+  featured Boolean @default(false)
+  order    Int     @default(0)
+
+  uddatedAt DateTime @updatedAt
+
+  @@index([categoryId])
+}

@@ -1,0 +1,13 @@
+model ProjectTechnology {
+  id           Int        @id @default(autoincrement())
+  projectId    String  
+  project      Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  technologyId Int      
+  technology   Technology @relation(fields: [technologyId], references: [id], onDelete: Cascade)
+  order        Int        @default(0)
+
+  updatedAt DateTime @updatedAt
+
+  @@index([projectId])
+  @@index([technologyId])
+}

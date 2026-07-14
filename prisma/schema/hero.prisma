@@ -1,0 +1,14 @@
+model Hero {
+  id        Int     @id @default(1)
+
+  greeting    String
+  name        String
+  role        String
+  titleLine   String[]
+  description String
+  passion     String
+
+  updatedAt DateTime @updatedAt
+
+  @@map("hero")
+}

@@ -1,0 +1,24 @@
+model Project {
+  id String @id @default(uuid())
+
+  title            String   @unique
+  category         String
+  subtitle         String?
+  cover            String
+  image            String[]
+  shortDescription String?
+  description      String
+  liveUrl          String?
+  githubUrl        String?
+  feature          String[]
+  futureImporve    String[]
+  stats            Json
+  meta             Json
+  isPublished      Boolean  @default(true)
+  order            Int      @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  technologies ProjectTechnology[]
+}

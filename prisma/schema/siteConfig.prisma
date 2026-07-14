@@ -1,0 +1,17 @@
+model SiteConfig {
+  id            Int     @id @default(1)
+  email         String
+  phone         String
+  resumeUrl     String?
+  cvUrl         String?
+  available     Boolean @default(true)
+  footerTxt     String?
+  description   String
+  footerTagline String?
+
+  primaryColor   String?
+  secondaryColor String?
+  ternaryColor   String?
+
+  updatedAt DateTime @updatedAt
+}

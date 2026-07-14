@@ -1,0 +1,12 @@
+
+
+model Technology {
+  id Int @id @default(autoincrement())
+  name String @unique
+  icon String
+  website String?
+
+  updatedAt DateTime @updatedAt
+
+  projects ProjectTechnology[]
+}

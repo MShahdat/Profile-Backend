@@ -1,0 +1,11 @@
+model Heading {
+  id          Int     @id @default(autoincrement())
+  name        String  @unique
+  icon        String
+  title       String?
+  description String?
+
+  updatedAt DateTime @updatedAt
+
+  @@map("heading")
+}
