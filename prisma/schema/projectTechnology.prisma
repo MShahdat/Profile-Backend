@@ -1,8 +1,10 @@
+
+
 model ProjectTechnology {
   id           Int        @id @default(autoincrement())
-  projectId    String  
+  projectId    String
   project      Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  technologyId Int      
+  technologyId Int
   technology   Technology @relation(fields: [technologyId], references: [id], onDelete: Cascade)
   order        Int        @default(0)
 

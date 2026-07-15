@@ -1,5 +1,6 @@
 model Service {
   id          String  @id @default(uuid())
+  
   icon        String
   iconColor   String
   bgColor     String

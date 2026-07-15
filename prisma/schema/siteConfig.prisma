@@ -1,5 +1,6 @@
 model SiteConfig {
   id            Int     @id @default(1)
+  
   email         String
   phone         String
   resumeUrl     String?

@@ -1,11 +1,11 @@
-
-
 model SocialLink {
-  id Int @id @default(autoincrement())
-  platform String
-  url String
-  icon String
-  order String
+  id       Int     @id @default(autoincrement())
+
+  platform String  @unique
+  url      String
+  icon     String?
+  order    Int     @default(0)
+  isPublished Boolean @default(true)
 
   updatedAt DateTime @updatedAt
 }

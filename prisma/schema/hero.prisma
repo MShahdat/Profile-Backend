@@ -1,7 +1,7 @@
 model Hero {
-  id        Int     @id @default(1)
+  id Int @id @default(1)
 
-  greeting    String
+  greeting    String?
   name        String
   role        String
   titleLine   String[]

@@ -1,5 +1,6 @@
 model Skill {
   id            Int           @id @default(autoincrement())
+
   categoryId    Int
   skillCategory SkillCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 

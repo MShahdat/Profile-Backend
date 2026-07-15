@@ -1,10 +1,10 @@
-
-
 model Technology {
-  id Int @id @default(autoincrement())
-  name String @unique
-  icon String
+  id      Int     @id @default(autoincrement())
+
+  name    String  @unique
+  icon    String?
   website String?
+  isPublished Boolean @default(true)
 
   updatedAt DateTime @updatedAt
 
