@@ -1,9 +1,9 @@
 model SkillCategory {
-  id    Int     @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  type  String
-  icon  String?
-  order Int     @default(0)
+  type        String  @unique
+  icon        String?
+  order       Int     @default(0)
   isPublished Boolean @default(true)
 
   updatedAt DateTime @updatedAt

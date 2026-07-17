@@ -7,6 +7,10 @@ import { notFound } from "./middleware/notFound"
 import { headingRouter } from "./modules/heading/heading.route"
 import { heroRouter } from "./modules/hero/hero.route"
 import { socialRouter } from "./modules/social/social.route"
+import { aboutRouter } from "./modules/about/about.route"
+import { toolRouter } from "./modules/tool/tool.route"
+import { categoryRouter } from "./modules/skillCategory/category.route"
+import { skillRouter } from "./modules/skill/skill.route"
 
 
 
@@ -38,6 +42,23 @@ app.use('/api/hero', heroRouter)
 
 
 app.use('/api/social-link', socialRouter)
+
+
+app.use('/api/about', aboutRouter)
+
+
+app.use('/api/tool', toolRouter)
+
+
+app.use('/api/skill-category', categoryRouter)
+
+
+app.use('/api/skill', skillRouter)
+
+
+
+
+
 
 
 app.use(notFound)

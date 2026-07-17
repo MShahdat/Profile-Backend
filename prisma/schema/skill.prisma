@@ -9,6 +9,7 @@ model Skill {
   icon     String
   featured Boolean @default(false)
   order    Int     @default(0)
+  isPublished Boolean @default(true)
 
   uddatedAt DateTime @updatedAt
 

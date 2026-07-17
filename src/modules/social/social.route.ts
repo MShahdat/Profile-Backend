@@ -7,6 +7,7 @@ import { authorization } from "../../middleware/auth";
 const route = Router()
 
 route.post('/', authorization.auth(), socialController.createSocialLink)
+route.get('/', socialController.getSocialLink)
 route.put('/:socialId', authorization.auth(), socialController.updateSocialLink)
 
 

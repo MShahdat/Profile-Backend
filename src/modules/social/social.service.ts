@@ -15,6 +15,21 @@ const createSocialLink = async (payload: ISocialLink) => {
 }
 
 
+
+//& get all link
+const getSocialLink = async () => {
+  
+  const result = await prisma.socialLink.findMany({
+    orderBy: {
+      order: "asc"
+    }
+  })
+
+  return result
+}
+
+
+
 //& UPDATE
 const updateSocialLink = async (id: number, payload: IUpdateSocialLink) => {
   
@@ -43,5 +58,6 @@ const updateSocialLink = async (id: number, payload: IUpdateSocialLink) => {
 export const socialService = {
   createSocialLink,
   updateSocialLink,
-
+  getSocialLink,
+  
 }

@@ -17,6 +17,22 @@ const createSocialLink = catchAsync(
 )
 
 
+
+//& get
+const getSocialLink = catchAsync(
+  async(req: Request, res: Response) => {
+
+    const result = await socialService.getSocialLink()
+
+    if(result.length === 0){
+      return notFoundResponse(res, 'Link not found')
+    }
+    return successResponse(res, httpCode.CREATED, 'social link created successfully', result)
+  }
+)
+
+
+
 //& UPDATE
 const updateSocialLink = catchAsync(
   async(req: Request, res: Response) => {
@@ -36,5 +52,6 @@ const updateSocialLink = catchAsync(
 export const socialController = {
   createSocialLink,
   updateSocialLink,
-
+  getSocialLink,
+  
 }

@@ -5,6 +5,7 @@ model Heading {
   icon        String?
   title       String?
   description String?
+  isPublished Boolean @default(true)
 
   updatedAt DateTime @updatedAt
 
