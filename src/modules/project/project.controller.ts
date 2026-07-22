@@ -48,9 +48,29 @@ const getProjectById = catchAsync(
 )
 
 
+
+//& update project by id
+const updateProject = catchAsync(
+  async (req: Request, res: Response) => {
+    const id = req.params.projectId as string
+    const body = req.body
+
+    const result = await projectService.updateProjectInto(id, body)
+
+    if (!result) {
+      return notFoundResponse(res, 'project not found')
+    }
+    return successResponse(res, httpCode.OK, 'project updated successfully', result)
+  }
+)
+
+
+
+
 export const projectController = {
   createProject,
   getProject,
   getProjectById,
+  updateProject,
 
 }

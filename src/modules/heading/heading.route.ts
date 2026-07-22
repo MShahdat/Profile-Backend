@@ -8,7 +8,7 @@ import { authorization } from "../../middleware/auth";
 const route = Router()
 
 route.post('/', authorization.auth(), headingController.createHeading)
-route.get('/:headingId', authorization.auth(), headingController.getHeading)
+route.get('/:headingId', headingController.getHeading)
 route.put('/:headingId', authorization.auth(), headingController.updateHeading)
 
 

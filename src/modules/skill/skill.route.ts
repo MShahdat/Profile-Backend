@@ -1,12 +1,13 @@
 import { Router } from "express";
 import { skillController } from "./skill.controller";
+import { authorization } from "../../middleware/auth";
 
 
-const route = Router() 
+const route = Router()
 
-route.post('/', skillController.createSkill)
+route.post('/', authorization.auth(), skillController.createSkill)
 route.get('/', skillController.getSkill)
-route.put('/:skillId', skillController.updateSkill)
+route.put('/:skillId', authorization.auth(), skillController.updateSkill)
 
 
 

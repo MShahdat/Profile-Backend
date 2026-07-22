@@ -16,6 +16,8 @@ import { projectRouter } from "./modules/project/project.route"
 import { categoryRouter } from "./modules/category/category.route"
 import { projectTechRouter } from "./modules/projectTechnology/projectTechnology.route"
 import { serviceRouter } from "./modules/service/service.route"
+import { educationRouter } from "./modules/education/education.route"
+import { contactRouter } from "./modules/contact/contact.route"
 
 
 
@@ -74,6 +76,12 @@ app.use('/api/project-technology', projectTechRouter)
 
 
 app.use('/api/services', serviceRouter)
+
+
+app.use('/api/education', educationRouter)
+
+
+app.use('/api/contact', contactRouter)
 
 
 app.use(notFound)

@@ -1,5 +1,5 @@
 import { prisma } from "../../lib/prisma"
-import { IProject } from "./project.interface"
+import { IProject, IProjectUpdate } from "./project.interface"
 
 
 
@@ -68,8 +68,34 @@ const getProjectByIdFromDB = async (id: string) => {
 }
 
 
+
+//& update project
+const updateProjectInto = async (id: string, payload: IProjectUpdate) => {
+
+  const isProject = await prisma.project.findUnique({
+    where: { id }
+  })
+
+  if (!isProject) {
+    return null
+  }
+
+  const result = await prisma.project.update({
+    where: { id },
+    data: {
+      ...payload
+    }
+  })
+
+  return result
+}
+
+
+
+
 export const projectService = {
   createProjectInto,
   getProjectsFromDB,
-  getProjectByIdFromDB
+  getProjectByIdFromDB,
+  updateProjectInto
 }

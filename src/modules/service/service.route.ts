@@ -1,14 +1,15 @@
 import { Router } from "express";
 import { serviceController } from "./service.controller";
+import { authorization } from "../../middleware/auth";
 
 
 
 
 const route = Router()
 
-route.post('/', serviceController.createService)
+route.post('/', authorization.auth(), serviceController.createService)
 route.get('/', serviceController.getService)
-route.put('/:serviceId', serviceController.updateService)
+route.put('/:serviceId', authorization.auth(), serviceController.updateService)
 
 
 
