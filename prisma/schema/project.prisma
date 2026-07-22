@@ -1,8 +1,10 @@
 model Project {
   id String @id @default(uuid())
 
-  title            String   @unique
-  category         String
+  title      String   @unique
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
   subtitle         String?
   cover            String
   image            String[]
@@ -21,4 +23,6 @@ model Project {
   updatedAt DateTime @updatedAt
 
   technologies ProjectTechnology[]
+
+  @@index([categoryId])
 }
