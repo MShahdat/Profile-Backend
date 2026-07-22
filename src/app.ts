@@ -14,6 +14,8 @@ import { skillRouter } from "./modules/skill/skill.route"
 import { technologyRouter } from "./modules/technology/technology.route"
 import { projectRouter } from "./modules/project/project.route"
 import { categoryRouter } from "./modules/category/category.route"
+import { projectTechRouter } from "./modules/projectTechnology/projectTechnology.route"
+import { serviceRouter } from "./modules/service/service.route"
 
 
 
@@ -66,6 +68,12 @@ app.use('/api/categories', categoryRouter)
 
 
 app.use('/api/projects', projectRouter)
+
+
+app.use('/api/project-technology', projectTechRouter)
+
+
+app.use('/api/services', serviceRouter)
 
 
 app.use(notFound)

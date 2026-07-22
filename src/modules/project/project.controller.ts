@@ -32,7 +32,25 @@ const getProject = catchAsync(
 )
 
 
+
+//& get project by id
+const getProjectById = catchAsync(
+  async (req: Request, res: Response) => {
+    const id = req.params.projectId as string
+
+    const result = await projectService.getProjectByIdFromDB(id)
+
+    if (!result) {
+      return notFoundResponse(res, 'project not found')
+    }
+    return successResponse(res, httpCode.OK, 'project retrive successfully', result)
+  }
+)
+
+
 export const projectController = {
   createProject,
-  getProject
+  getProject,
+  getProjectById,
+
 }

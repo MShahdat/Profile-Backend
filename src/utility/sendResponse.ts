@@ -10,14 +10,12 @@ export const rootResponse = (res: Response) => {
     author: "Md. Shahdat Hossain",
     message: "this is my portfolio backend"
   }
-  res.status(200).json({
-    response
-  })
+  res.status(200).json(response)
 }
 
 
 //& RESPONSE MESSAGE
-export const successResponse = <T, M> (res: Response, statusCode: number, message?: string, data?: T, meta?: M) => {
+export const successResponse = <T, M>(res: Response, statusCode: number, message?: string, data?: T, meta?: M) => {
   const response = {
     success: true,
     statusCode,
@@ -34,7 +32,7 @@ export const notFoundResponse = (res: Response, message?: string) => {
   const response = {
     success: false,
     statusCode: httpCode.NOT_FOUND,
-    message : message || "Not Found!!",
+    message: message || "Not Found!!",
     data: null
   }
   res.status(httpCode.NOT_FOUND).json(response)
@@ -46,7 +44,7 @@ export const unauthorizedResponse = (res: Response, message?: string) => {
   const response = {
     success: false,
     statusCode: httpCode.UNAUTHORIZED,
-    message : message || "Unauthorized access!",
+    message: message || "Unauthorized access!",
   }
   res.status(httpCode.UNAUTHORIZED).json(response)
 }
@@ -58,7 +56,7 @@ export const forbiddenResponse = (res: Response, message: string) => {
   const response = {
     success: false,
     statusCode: httpCode.FORBIDDEN,
-    message : message,
+    message: message,
   }
   res.status(httpCode.FORBIDDEN).json(response)
 }
@@ -69,7 +67,7 @@ export const badResponse = (res: Response, message: string) => {
   const response = {
     success: false,
     statusCode: httpCode.BAD_REQUEST,
-    message : message,
+    message: message,
   }
   res.status(httpCode.BAD_REQUEST).json(response)
 }
@@ -77,7 +75,7 @@ export const badResponse = (res: Response, message: string) => {
 
 
 //& error response
-export const errorResponse = <T> (res: Response, message?: string, data?: T) => {
+export const errorResponse = <T>(res: Response, message?: string, data?: T) => {
   const response = {
     success: false,
     statusCode: httpCode.INTERNAL_SERVER_ERROR,

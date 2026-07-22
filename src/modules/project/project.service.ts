@@ -28,14 +28,48 @@ const createProjectInto = async (payload: IProject) => {
 
 //& get profects
 const getProjectsFromDB = async () => {
-  const result = await prisma.project.findMany()
+  const result = await prisma.project.findMany({
+    include: {
+      technologies: {
+        select: {
+          technology: {
+            select: {
+              name: true
+            }
+          }
+        }
+      }
+    }
+  })
   return result
 }
 
 
 
+//& get by id
+const getProjectByIdFromDB = async (id: string) => {
+
+  const result = await prisma.project.findUnique({
+    where: { id },
+    include: {
+      technologies: {
+        select: {
+          technology: {
+            select: {
+              name: true
+            }
+          }
+        }
+      }
+    }
+  })
+
+  return result
+}
+
+
 export const projectService = {
   createProjectInto,
   getProjectsFromDB,
-
+  getProjectByIdFromDB
 }
