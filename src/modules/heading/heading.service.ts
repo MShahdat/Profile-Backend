@@ -22,7 +22,7 @@ const createHeadingIntoDB = async (payload: IHeading) => {
 const getHeadingFromDB = async (id: number) => {
 
   const result = await prisma.heading.findUnique({
-    where: {id}
+    where: { id }
   })
 
   return result
@@ -35,15 +35,15 @@ const getHeadingFromDB = async (id: number) => {
 const updateHeadingIntoDB = async (id: number, payload: IHeadingUpdate) => {
 
   const isHeading = await prisma.heading.findUnique({
-    where: {id}
+    where: { id }
   })
 
-  if(!isHeading){
+  if (!isHeading) {
     return null
   }
 
   const result = await prisma.heading.update({
-    where: {id},
+    where: { id },
     data: {
       ...payload
     }

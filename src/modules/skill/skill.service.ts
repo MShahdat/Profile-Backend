@@ -5,14 +5,14 @@ import { ISkill, ISkillUpdate } from "./skill.interface"
 
 
 //& create
-const createSkill = async(payload: ISkill) => {
-  const {categoryId} = payload
+const createSkill = async (payload: ISkill) => {
+  const { categoryId } = payload
 
   const category = prisma.skillCategory.findUnique({
-    where: {id: categoryId}
+    where: { id: categoryId }
   })
 
-  if(!category){
+  if (!category) {
     return null
   }
 
@@ -27,32 +27,32 @@ const createSkill = async(payload: ISkill) => {
 
 
 //& get
-const getSkill = async() => {
+const getSkill = async () => {
 
- const result = await prisma.skill.findMany({
-  orderBy: {
-    order: "asc"
-  }
- })
+  const result = await prisma.skill.findMany({
+    orderBy: {
+      order: "asc"
+    }
+  })
 
   return result
 }
 
 
 //& update
-const updateSkill = async(id:number, payload: ISkillUpdate) => {
+const updateSkill = async (id: number, payload: ISkillUpdate) => {
 
   const skill = await prisma.skill.findUnique({
-    where: {id}
+    where: { id }
   })
 
-  if(!skill){
+  if (!skill) {
     return null
   }
 
   const result = await prisma.skill.update({
-    where: {id},
-    
+    where: { id },
+
     data: {
       ...payload
     }

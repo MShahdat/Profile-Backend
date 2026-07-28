@@ -26,7 +26,11 @@ const createService = async (payload: IService) => {
 
 //& get all services 
 const getService = async () => {
-  const result = await prisma.service.findMany()
+  const result = await prisma.service.findMany({
+    orderBy: {
+      order: "asc"
+    }
+  })
   return result
 }
 

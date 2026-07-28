@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 import { catchAsync } from "../../utility/catchAsync";
 import { heroService } from "./hero.service";
-import { successResponse } from "../../utility/sendResponse";
+import { notFoundResponse, successResponse } from "../../utility/sendResponse";
 import httpCode from 'http-status'
 
 
 const createHero = catchAsync(
-  async(req: Request, res: Response) => {
+  async (req: Request, res: Response) => {
     const body = req.body
 
     const result = await heroService.createHeroIntoDB(body)
@@ -17,7 +17,22 @@ const createHero = catchAsync(
 
 
 
+//& get hero
+const getHero = catchAsync(
+  async (req: Request, res: Response) => {
+
+    const result = await heroService.getHeroFromDB()
+
+    if (!result) {
+      return notFoundResponse(res, `hero doesn't create yet`)
+    }
+
+    return successResponse(res, httpCode.OK, 'hero retrive successfully', result)
+  }
+)
 export const heroController = {
   createHero,
+  getHero,
+
 
 }

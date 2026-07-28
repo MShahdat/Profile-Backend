@@ -22,7 +22,11 @@ const createContact = async (payload: IContact) => {
 //* get contact information
 const getContact = async () => {
 
-  const result = await prisma.contact.findMany()
+  const result = await prisma.contact.findMany({
+    // orderBy: {
+    //   createdAt: "asc"
+    // }
+  })
   return result
 }
 

@@ -25,12 +25,13 @@ const auth = () => {
     }
     console.log('decoded', decoded)
 
-    const {id, name, email} = decoded;
+    const { id, name, email, role } = decoded;
 
     req.user = {
       id,
       name,
       email,
+      role,
     }
     next();
   })

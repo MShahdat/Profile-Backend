@@ -12,7 +12,7 @@ const route = Router()
 
 route.post('/register', validateData(adminRegisterSchema), authController.adminRegister)
 route.post('/login', authController.login)
-route.post('/access-token', authorization.auth(), authController.accessToken)
+route.post('/access-token', authController.accessToken)
 
 
 export const authRouter = route

@@ -20,16 +20,41 @@ const createCategoryIntoDB = async (payload: ICategoy) => {
 
 
 
-
+//& get category
 const getCategoryFromDB = async () => {
-  const result = await prisma.category.findMany()
+  const result = await prisma.category.findMany({
+    orderBy: {
+      order: "asc"
+    }
+  })
   return result
 }
 
 
+//& updated category
+const updateCategoryIntoDB = async (id: number, payload: ICategoy) => {
+
+  const isCat = await prisma.category.findUnique({
+    where: { id }
+  })
+
+  if (!isCat) {
+    return null
+  }
+
+  const result = await prisma.category.update({
+    where: { id },
+    data: {
+      ...payload
+    }
+  })
+  return result
+}
 
 
 export const categoryService = {
   createCategoryIntoDB,
-  getCategoryFromDB
+  getCategoryFromDB,
+  updateCategoryIntoDB,
+
 }

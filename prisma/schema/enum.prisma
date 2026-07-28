@@ -1,7 +1,8 @@
-
-
-
 enum EducationType {
   EDUCATION
   CERTIFICATION
+}
+
+enum ROLE {
+  ADMIN
 }

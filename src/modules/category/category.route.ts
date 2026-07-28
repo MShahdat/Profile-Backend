@@ -7,6 +7,7 @@ const route = Router()
 
 route.post('/', authorization.auth(), categoryController.createCategory)
 route.get('/', categoryController.getCategory)
+route.put('/:id', authorization.auth(), categoryController.updateCategory)
 
 
 export const categoryRouter = route

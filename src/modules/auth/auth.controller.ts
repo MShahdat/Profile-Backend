@@ -9,11 +9,11 @@ import { badResponse, notFoundResponse, successResponse, unauthorizedResponse } 
 //& USER REGISTER
 const adminRegister = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-  const body = req.body
+    const body = req.body
 
-  const admin = await authServices.adminRegisterIntoDB(body)
-  successResponse(res, httpCode.CREATED, 'Admin created successfully', admin)
-})
+    const admin = await authServices.adminRegisterIntoDB(body)
+    successResponse(res, httpCode.CREATED, 'Admin created successfully', admin)
+  })
 
 
 
@@ -40,7 +40,7 @@ const login = catchAsync(async (req: Request, res: Response) => {
     maxAge: 1000 * 60 * 60 * 24 * 7   // 7 days
   })
 
-   res.cookie('accessToken', result.accessToken, {
+  res.cookie('accessToken', result.accessToken, {
     secure: false,
     httpOnly: true,
     sameSite: "none",
@@ -59,12 +59,14 @@ const accessToken = catchAsync(async (req: Request, res: Response) => {
   console.log('cookies : ', req.cookies.refreshToken)
   const token = req.cookies.refreshToken;
 
+  console.log('refresh token ', token)
+
   const result = await authServices.generateAccessToken(token)
 
-  if(result === 'unauthorized'){
+  if (result === 'unauthorized') {
     return unauthorizedResponse(res)
   }
-  
+
   res.cookie('accessToken', result, {
     secure: false,
     httpOnly: true,
@@ -75,7 +77,7 @@ const accessToken = catchAsync(async (req: Request, res: Response) => {
   const rs = {
     accessToken: result
   }
-  successResponse(res, httpCode.OK , 'Token refreshed successfully', rs)
+  successResponse(res, httpCode.OK, 'Token refreshed successfully', rs)
 
 })
 

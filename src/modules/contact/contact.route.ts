@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { contactController } from "./contact.controller";
+import { authorization } from "../../middleware/auth";
 
 
 
@@ -7,7 +8,7 @@ import { contactController } from "./contact.controller";
 const route = Router()
 
 route.post('/', contactController.createContact)
-route.get('/', contactController.getContact)
+route.get('/', authorization.auth(), contactController.getContact)
 
 
 

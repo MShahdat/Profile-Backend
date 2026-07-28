@@ -1,9 +1,9 @@
 import { prisma } from "../../lib/prisma"
-import { ICategory } from "./category.interface"
+import { ICategory, ICategoryUpdate } from "./category.interface"
 
 
 
-const createCategoryIntoDB = async(payload: ICategory) => {
+const createCategoryIntoDB = async (payload: ICategory) => {
 
   const result = await prisma.skillCategory.create({
     data: {
@@ -17,7 +17,7 @@ const createCategoryIntoDB = async(payload: ICategory) => {
 
 
 
-const getCategoryFromDB = async() => {
+const getCategoryFromDB = async () => {
 
   const result = await prisma.skillCategory.findMany({
     orderBy: {
@@ -30,7 +30,30 @@ const getCategoryFromDB = async() => {
 
 
 
+//& UPDATE
+const updateCategoryIntoDB = async (id: number, payload: ICategoryUpdate) => {
+
+  const cate = await prisma.skillCategory.findUnique({
+    where: { id }
+  })
+
+  if (!cate) {
+    return null
+  }
+
+  const result = await prisma.skillCategory.update({
+    where: { id },
+    data: {
+      ...payload
+    },
+  })
+
+  return result
+}
+
 export const categoryService = {
   createCategoryIntoDB,
-  getCategoryFromDB
+  getCategoryFromDB,
+  updateCategoryIntoDB,
+
 }

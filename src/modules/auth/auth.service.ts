@@ -1,7 +1,7 @@
 import config from "../../config/env"
 import { prisma } from "../../lib/prisma"
 import { jwtToken } from "../../utility/jwt"
-import { ADMIN, LOGIN} from "./auth.interface"
+import { ADMIN, LOGIN } from "./auth.interface"
 import bcrypt from 'bcrypt'
 import { JwtPayload, SignOptions } from "jsonwebtoken"
 import jwt from "jsonwebtoken"
@@ -9,7 +9,7 @@ import jwt from "jsonwebtoken"
 
 //& ADMIN REGISTER
 const adminRegisterIntoDB = async (payload: ADMIN) => {
-  const { name, email, password} = payload
+  const { name, email, password, role } = payload
 
   const isAdmin = await prisma.admin.findUnique({
     where: { email }
@@ -23,8 +23,7 @@ const adminRegisterIntoDB = async (payload: ADMIN) => {
 
   const createdAdmin = await prisma.admin.create({
     data: {
-      name,
-      email,
+      ...payload,
       password: hasPass
     }
   })
@@ -49,7 +48,7 @@ const adminRegisterIntoDB = async (payload: ADMIN) => {
 const loginFromDB = async (payload: LOGIN) => {
   const { email, password } = payload
   console.log(payload)
-  
+
   const admin = await prisma.admin.findUnique({
     where: { email }
   })
@@ -98,37 +97,37 @@ const loginFromDB = async (payload: LOGIN) => {
 
 //& GENERATE REFRESH TOKEN
 const generateAccessToken = async (token: string) => {
-  
-    if (!token) {
-      return 'unauthorized'
-    }
-    
-    const decoded = jwt.verify(
-      token,
-      config.jwt_refresh_secret as string) as JwtPayload
 
-      const {email} = decoded
-      // console.log('decoded', decoded)
+  if (!token) {
+    return 'unauthorized'
+  }
 
-      const isAdmin = await prisma.admin.findUnique({
-        where: {email}
-      })
-      
+  const decoded = jwt.verify(
+    token,
+    config.jwt_refresh_secret as string) as JwtPayload
+
+  const { email } = decoded
+  // console.log('decoded', decoded)
+
+  const isAdmin = await prisma.admin.findUnique({
+    where: { email }
+  })
 
 
-      //& TOKEN GENERATE
-      const jwtPayload = {
-        id: isAdmin?.id,
-        name: isAdmin?.name,
-        email,
-      }
-      // console.log(jwtPayload)
 
-      const accessToken = jwtToken.createToken(jwtPayload, config.jwt_access_sectet, config.jwt_access_expires_in as SignOptions['expiresIn']
-      )
-      // console.log('access token: ', accessToken)
+  //& TOKEN GENERATE
+  const jwtPayload = {
+    id: isAdmin?.id,
+    name: isAdmin?.name,
+    email,
+  }
+  // console.log(jwtPayload)
 
-      return accessToken;
+  const accessToken = jwtToken.createToken(jwtPayload, config.jwt_access_sectet, config.jwt_access_expires_in as SignOptions['expiresIn']
+  )
+  // console.log('access token: ', accessToken)
+
+  return accessToken;
 }
 
 

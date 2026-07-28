@@ -1,10 +1,11 @@
 model Tool {
-  id    Int     @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  name  String @unique
-  icon  String?
-  order Int     @default(0)
+  name        String  @unique
+  icon        String?
+  order       Int     @default(0)
   isPublished Boolean @default(true)
 
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

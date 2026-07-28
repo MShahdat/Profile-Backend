@@ -39,6 +39,9 @@ const getProjectsFromDB = async () => {
           }
         }
       }
+    },
+    orderBy: {
+      order: "asc"
     }
   })
   return result

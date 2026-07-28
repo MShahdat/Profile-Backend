@@ -3,8 +3,9 @@ import { ISocialLink, IUpdateSocialLink } from "./social.interface"
 
 
 
+//& create social link
 const createSocialLink = async (payload: ISocialLink) => {
-  
+
   const result = await prisma.socialLink.create({
     data: {
       ...payload
@@ -18,7 +19,7 @@ const createSocialLink = async (payload: ISocialLink) => {
 
 //& get all link
 const getSocialLink = async () => {
-  
+
   const result = await prisma.socialLink.findMany({
     orderBy: {
       order: "asc"
@@ -32,18 +33,18 @@ const getSocialLink = async () => {
 
 //& UPDATE
 const updateSocialLink = async (id: number, payload: IUpdateSocialLink) => {
-  
+
   const social = await prisma.socialLink.findUnique({
-    where: {id}
+    where: { id }
   })
 
-  if(!social){
+  if (!social) {
     return null
   }
 
   const result = await prisma.socialLink.update({
-    where: {id},
-  
+    where: { id },
+
     data: {
       ...payload,
       platform: social.platform
@@ -59,5 +60,5 @@ export const socialService = {
   createSocialLink,
   updateSocialLink,
   getSocialLink,
-  
+
 }

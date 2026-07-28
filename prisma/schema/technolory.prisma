@@ -1,11 +1,12 @@
 model Technology {
-  id      Int     @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  name    String  @unique
-  icon    String?
-  website String?
+  name        String  @unique
+  icon        String?
+  website     String?
   isPublished Boolean @default(true)
 
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   projects ProjectTechnology[]

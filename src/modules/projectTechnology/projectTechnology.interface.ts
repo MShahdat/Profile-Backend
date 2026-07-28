@@ -7,3 +7,10 @@ export interface IPTechnology {
   order: number
   isPublished: boolean
 }
+
+
+
+export interface IPTechnologyUpdate {
+  order?: number
+  isPublished?: boolean
+}

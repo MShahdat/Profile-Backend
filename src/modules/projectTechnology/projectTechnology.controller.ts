@@ -30,8 +30,28 @@ const getProjectTech = catchAsync(
 )
 
 
+
+
+
+//& update project technology
+const updateProjectTech = catchAsync(
+  async (req: Request, res: Response) => {
+    const body = req.body
+    const id = Number(req.params.id)
+
+    const result = await projectTechService.updateProjectTech(id, body)
+    if (!result) {
+      return notFoundResponse(res, 'not found')
+    }
+    return successResponse(res, httpCode.OK, 'project technology retrive successfully', result)
+  }
+)
+
+
+
 export const projectTechController = {
   createProjectTech,
   getProjectTech,
+  updateProjectTech,
 
 }

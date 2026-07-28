@@ -3,6 +3,7 @@ model Category {
 
   title String
   icon  String?
+  order Int     @default(0)
 
   createddAt DateTime @default(now())
   updatedAt  DateTime @updatedAt

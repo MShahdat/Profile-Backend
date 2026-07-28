@@ -1,5 +1,5 @@
 import { prisma } from "../../lib/prisma"
-import { IPTechnology } from "./projectTechnology.interface"
+import { IPTechnology, IPTechnologyUpdate } from "./projectTechnology.interface"
 
 
 
@@ -53,8 +53,31 @@ const getProjectTech = async () => {
 
 
 
+//& update  
+const updateProjectTech = async (id: number, payload: IPTechnologyUpdate) => {
+
+  const tech = await prisma.projectTechnology.findUnique({
+    where: { id }
+  })
+
+  if (!tech) {
+    return null
+  }
+
+  const result = await prisma.projectTechnology.update({
+    where: { id },
+    data: {
+      ...payload
+    },
+  })
+  return result
+}
+
+
+
 export const projectTechService = {
   createProjectTech,
   getProjectTech,
+  updateProjectTech,
 
 }

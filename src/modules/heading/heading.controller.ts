@@ -7,10 +7,10 @@ import { notFoundResponse, successResponse } from "../../utility/sendResponse"
 
 //& CREATE HEADING 
 const createHeading = catchAsync(
-  async(req: Request, res: Response) => {
+  async (req: Request, res: Response) => {
     const body = req.body
     const result = await headingService.createHeadingIntoDB(body)
-    
+
     return successResponse(res, httpCode.CREATED, 'Heading created successfully', result)
   }
 )
@@ -19,11 +19,11 @@ const createHeading = catchAsync(
 
 //& GET HEADING 
 const getHeading = catchAsync(
-  async(req: Request, res: Response) => {
-    const id = Number(req.params.headingId)
+  async (req: Request, res: Response) => {
+    const id = Number(req.params.id)
     const result = await headingService.getHeadingFromDB(id)
-    
-    if(!result){
+
+    if (!result) {
       return notFoundResponse(res, 'Heading not found')
     }
     return successResponse(res, httpCode.OK, 'Heading retrive successfully', result)
@@ -35,13 +35,13 @@ const getHeading = catchAsync(
 
 //& UPDATE HEADING 
 const updateHeading = catchAsync(
-  async(req: Request, res: Response) => {
-    const id = Number(req.params.headingId)
+  async (req: Request, res: Response) => {
+    const id = Number(req.params.id)
     const body = req.body
 
     const result = await headingService.updateHeadingIntoDB(id, body)
-    
-    if(!result){
+
+    if (!result) {
       return notFoundResponse(res, 'Heading not found')
     }
     return successResponse(res, httpCode.OK, 'Heading updated successfully', result)
@@ -55,5 +55,5 @@ export const headingController = {
   createHeading,
   getHeading,
   updateHeading,
-  
+
 }

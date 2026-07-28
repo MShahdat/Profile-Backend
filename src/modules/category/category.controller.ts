@@ -30,8 +30,27 @@ const getCategory = catchAsync(
   }
 )
 
+
+
+//& updated category
+const updateCategory = catchAsync(
+  async (req: Request, res: Response) => {
+    const body = req.body
+    const id = Number(req.params.id)
+
+    const result = await categoryService.updateCategoryIntoDB(id, body)
+
+    if (!result) {
+      return notFoundResponse(res, 'No category available')
+    }
+    return successResponse(res, httpCode.OK, 'categories retrive successfully', result)
+  }
+)
+
+
+
 export const categoryController = {
   createCategory,
   getCategory,
-
+  updateCategory
 }

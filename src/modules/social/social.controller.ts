@@ -7,7 +7,7 @@ import httpCode from 'http-status'
 
 //& CREATE
 const createSocialLink = catchAsync(
-  async(req: Request, res: Response) => {
+  async (req: Request, res: Response) => {
     const body = req.body
 
     const result = await socialService.createSocialLink(body)
@@ -20,11 +20,11 @@ const createSocialLink = catchAsync(
 
 //& get
 const getSocialLink = catchAsync(
-  async(req: Request, res: Response) => {
+  async (req: Request, res: Response) => {
 
     const result = await socialService.getSocialLink()
 
-    if(result.length === 0){
+    if (result.length === 0) {
       return notFoundResponse(res, 'Link not found')
     }
     return successResponse(res, httpCode.CREATED, 'social link created successfully', result)
@@ -35,13 +35,13 @@ const getSocialLink = catchAsync(
 
 //& UPDATE
 const updateSocialLink = catchAsync(
-  async(req: Request, res: Response) => {
+  async (req: Request, res: Response) => {
     const body = req.body
     const id = Number(req.params.socialId)
 
     const result = await socialService.updateSocialLink(id, body)
 
-    if(!result){
+    if (!result) {
       return notFoundResponse(res, 'link not found')
     }
 
@@ -53,5 +53,5 @@ export const socialController = {
   createSocialLink,
   updateSocialLink,
   getSocialLink,
-  
+
 }
