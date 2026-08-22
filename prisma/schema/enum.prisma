@@ -4,5 +4,6 @@ enum EducationType {
 }
 
 enum ROLE {
+  SUPER_ADMIN
   ADMIN
 }

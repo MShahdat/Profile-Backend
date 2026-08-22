@@ -1,23 +1,16 @@
 import { NextFunction, Request, Response } from "express"
-import { badResponse } from "../utility/sendResponse"
-import { z, ZodError } from 'zod'
-import httpCode from 'http-status'
+import { catchAsync } from "../utility/catchAsync"
+import z from "zod"
 
-export const validateData = (schema: z.ZodObject<any, any>) => {
-  return (req: Request, res: Response, next: NextFunction) => {
-    try {
-      schema.parse(req.body)
-      next()
-    } 
-    catch (error: any) {
-      if (error instanceof ZodError) {
-        const errorMessages = error.issues.map((issue) => ({
-          message: `${issue.path.join('.')} is ${issue.message}`,
-        }))
-        res.status(httpCode.BAD_REQUEST).json({ error: 'Invalid data', details: errorMessages });
-      } else {
-        res.status(httpCode.INTERNAL_SERVER_ERROR).json({ error: 'Internal Server Error' });
-      }
+export const validateData = (schema: z.ZodObject) => {
+  return catchAsync((req: Request, res: Response, next: NextFunction) => {
+    const payload = schema.safeParse(req.body)
+
+    if (!payload.success) {
+      console.log('error', payload.error.issues);
+      throw new Error(payload.error.issues[0]?.message)
     }
-  }
+    req.body = payload.data
+    next()
+  })
 }

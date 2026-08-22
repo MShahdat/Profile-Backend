@@ -9,7 +9,7 @@ import jwt from "jsonwebtoken"
 
 //& ADMIN REGISTER
 const adminRegisterIntoDB = async (payload: ADMIN) => {
-  const { name, email, password, role } = payload
+  const { email, password } = payload
 
   const isAdmin = await prisma.admin.findUnique({
     where: { email }
@@ -24,6 +24,7 @@ const adminRegisterIntoDB = async (payload: ADMIN) => {
   const createdAdmin = await prisma.admin.create({
     data: {
       ...payload,
+      role: 'ADMIN',
       password: hasPass
     }
   })
@@ -65,12 +66,13 @@ const loginFromDB = async (payload: LOGIN) => {
   }
 
   //& JWT TOKEN GENERATE
-  const { id, name } = admin
+  const { id, name, role } = admin
 
   const jwtPayload = {
     id,
     name,
     email,
+    role,
   } as JwtPayload
 
   console.log('jwt payload ', jwtPayload)

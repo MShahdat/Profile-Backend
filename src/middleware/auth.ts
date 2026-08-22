@@ -3,12 +3,16 @@ import { forbiddenResponse, unauthorizedResponse } from "../utility/sendResponse
 import config from "../config/env";
 import { catchAsync } from "../utility/catchAsync";
 import { jwtToken } from "../utility/jwt";
+import { ROLE } from "../../generated/prisma/enums";
+import { prisma } from "../lib/prisma";
 
 
 
-const auth = () => {
+const auth = (...roles: ROLE[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const token = req.cookies.accessToken ? req.cookies.accessToken
+    const token = req.cookies.accessToken
+      ?
+      req.cookies.accessToken
       :
       req.headers.authorization?.startsWith('Bearer ') ? req.headers.authorization.split(' ')[1]
         :
@@ -26,6 +30,25 @@ const auth = () => {
     console.log('decoded', decoded)
 
     const { id, name, email, role } = decoded;
+
+    if (roles.length && !roles.includes(role)) {
+      throw new Error(
+        "Forbidden. You don't have permission to access this resource.",
+      );
+    }
+
+    const admin = await prisma.admin.findUnique({
+      where: {
+        id,
+        email,
+        name,
+        role,
+      },
+    });
+
+    if (!admin) {
+      throw new Error("User not found. Please log in again.");
+    }
 
     req.user = {
       id,
