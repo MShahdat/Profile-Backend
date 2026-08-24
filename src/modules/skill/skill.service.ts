@@ -1,6 +1,7 @@
+import { Prisma } from "../../../generated/prisma/client"
 import { prisma } from "../../lib/prisma"
 import { notFoundResponse } from "../../utility/sendResponse"
-import { ISkill, ISkillUpdate } from "./skill.interface"
+import { ISkill, ISkillUpdate, SkillQuery } from "./skill.interface"
 
 
 
@@ -27,11 +28,32 @@ const createSkill = async (payload: ISkill) => {
 
 
 //& get
-const getSkill = async () => {
+const getSkill = async (query: SkillQuery) => {
+
+  // console.log('query', query)
+
+  const sort = query.sortBy ? query.sortBy : 'order';
+  const sortOrder = query.sortOrder ? query.sortOrder : 'asc'
+
+  const andCondition: Prisma.SkillWhereInput[] = []
+
+  if (query.type) {
+    andCondition.push({
+      skillCategory: {
+        type: query.type
+      }
+    })
+  }
 
   const result = await prisma.skill.findMany({
+    where: {
+      AND: andCondition
+    },
+    include: {
+      skillCategory: true
+    },
     orderBy: {
-      order: "asc"
+      [sort]: sortOrder
     }
   })
 

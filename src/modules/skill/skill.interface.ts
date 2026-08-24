@@ -20,3 +20,12 @@ export interface ISkillUpdate {
   featured?: boolean
   order?: number
 }
+
+
+
+export interface SkillQuery {
+  type?: string
+  sortOrder?: string
+  sortBy?: string
+  featured?: boolean
+}

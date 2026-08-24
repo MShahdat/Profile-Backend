@@ -34,6 +34,9 @@ export const seedSuperAdmin = async () => {
         password: hasPass,
         role: "SUPER_ADMIN"
       },
+      omit: {
+        password: true
+      }
     });
 
     console.log("super admin created", superAdmi);

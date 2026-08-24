@@ -51,7 +51,7 @@ const loginFromDB = async (payload: LOGIN) => {
   console.log(payload)
 
   const admin = await prisma.admin.findUnique({
-    where: { email }
+    where: { email },
   })
 
   if (!admin) {
@@ -64,6 +64,7 @@ const loginFromDB = async (payload: LOGIN) => {
   if (!isMatch) {
     return 'invalid'
   }
+
 
   //& JWT TOKEN GENERATE
   const { id, name, role } = admin
@@ -116,12 +117,11 @@ const generateAccessToken = async (token: string) => {
   })
 
 
-
-  //& TOKEN GENERATE
   const jwtPayload = {
     id: isAdmin?.id,
     name: isAdmin?.name,
     email,
+    role: isAdmin?.role
   }
   // console.log(jwtPayload)
 

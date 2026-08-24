@@ -8,12 +8,19 @@ import httpCode from 'http-status'
 
 const createProject = catchAsync(
   async (req: Request, res: Response) => {
-    const body = req.body
 
-    const result = await projectService.createProjectInto(body)
-    if (result === 'exist') {
-      return badResponse(res, 'this project alrady exist. used different title')
+    const files = req.files as { [filedName: string]: Express.Multer.File[] } | undefined
+
+    const cover = files?.['cover']?.[0];
+    const images = files?.['images'] || [];
+
+    if (!req.body.data || !cover) {
+      throw new Error('invalid form data')
     }
+    let data = JSON.parse(req.body.data)
+
+    const result = await projectService.createProjectInto(data, cover, images!)
+
     return successResponse(res, httpCode.CREATED, 'project created successfully', result)
   }
 )
@@ -52,10 +59,19 @@ const getProjectById = catchAsync(
 //& update project by id
 const updateProject = catchAsync(
   async (req: Request, res: Response) => {
-    const id = req.params.projectId as string
-    const body = req.body
 
-    const result = await projectService.updateProjectInto(id, body)
+    const id = req.params.projectId as string
+    const files = req.files as { [filedName: string]: Express.Multer.File[] } | undefined
+
+    const cover = files?.['cover']?.[0];
+    const images = files?.['images'] || [];
+
+    if (!req.body.data) {
+      throw new Error('invalid form data')
+    }
+    let data = JSON.parse(req.body.data)
+
+    const result = await projectService.updateProjectInto(id, data, cover!, images!)
 
     if (!result) {
       return notFoundResponse(res, 'project not found')

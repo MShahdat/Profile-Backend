@@ -3,10 +3,8 @@
 
 export interface IProject {
   title: string
-  category: string
+  categoryId: number
   subtitle?: string
-  cover: string
-  image: string[]
   shortDescription?: string
   description: string
   liveUrl?: string
@@ -21,6 +19,7 @@ export interface IProject {
 
 
 export interface MetaState {
+  [key: string]: string
   level: string
   value: string
 }
@@ -28,9 +27,8 @@ export interface MetaState {
 
 
 export interface IProjectUpdate {
+  categoryId?: number
   subtitle?: string
-  cover?: string
-  image?: string[]
   shortDescription?: string
   description?: string
   liveUrl?: string

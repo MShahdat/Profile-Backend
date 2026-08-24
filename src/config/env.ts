@@ -23,6 +23,9 @@ const config = {
   super_admin_name: process.env.SUPER_ADMIN_NAME!,
   super_admin_email: process.env.SUPER_ADMIN_EMAIL!,
   super_admin_password: process.env.SUPER_ADMIN_PASSWORD!,
+  smtp_user: process.env.SMTP_USER!,
+  smtp_sender: process.env.SMTP_SENDER!,
+  smtp_password: process.env.SMTP_PASSWORD!,
 }
 
 

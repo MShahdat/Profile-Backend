@@ -4,6 +4,7 @@ import { siteConfigService } from "./siteConfig.service";
 import { notFoundResponse, successResponse } from "../../utility/sendResponse";
 import httpStatus from 'http-status'
 
+//& CREATE
 const createSiteConfig = catchAsync(
   async (req: Request, res: Response) => {
 

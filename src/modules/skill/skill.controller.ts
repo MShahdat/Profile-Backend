@@ -25,7 +25,8 @@ const createSkill = catchAsync(
 const getSkill = catchAsync(
   async (req: Request, res: Response) => {
 
-    const result = await skillService.getSkill()
+    const query = req.query
+    const result = await skillService.getSkill(query)
 
     if (result.length === 0) {
       return notFoundResponse(res, 'skill not found')

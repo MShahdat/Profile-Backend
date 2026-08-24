@@ -1,6 +1,9 @@
+import path from "path";
+import config from "../../config/env";
+import { transporter } from "../../lib/nodemailer";
 import { prisma } from "../../lib/prisma";
 import { IContact } from "./contact.interface";
-
+import ejs from 'ejs'
 
 
 
@@ -13,6 +16,39 @@ const createContact = async (payload: IContact) => {
     }
   })
 
+  const receiveData = {
+    name: payload.name,
+    email: payload.email,
+    message: payload.message
+  }
+
+  const htmlReceive = await ejs.renderFile(
+    path.join(process.cwd(), 'src/templete/receiveMail.ejs'),
+    receiveData
+  )
+
+  await transporter.sendMail({
+    from: payload.email,
+    to: config.smtp_sender,
+    subject: `New Contact Form Message from '${payload.name}'`,
+    html: htmlReceive
+  })
+
+
+  const replyData = {
+    name: payload.name,
+  }
+  const html = await ejs.renderFile(
+    path.join(process.cwd(), 'src/templete/replyMail.ejs'),
+    replyData
+  )
+
+  await transporter.sendMail({
+    from: config.smtp_sender,
+    to: payload.email,
+    subject: `Thanks for reaching out, '${payload.name}'!`,
+    html: html
+  })
 
   return result
 }
