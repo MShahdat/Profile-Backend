@@ -1,6 +1,7 @@
 import config from "../config/env";
 import { prisma } from "../lib/prisma";
 import bcrypt from 'bcrypt'
+import { AppError } from "./appError";
 
 
 export const seedSuperAdmin = async () => {
@@ -19,7 +20,7 @@ export const seedSuperAdmin = async () => {
     const password = config.super_admin_password;
 
     if (!name || !email || !password) {
-      throw new Error("no super admin name, email, password");
+      throw new AppError(500, "no super admin name, email, password");
     }
 
     const hasPass = await bcrypt.hash(

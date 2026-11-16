@@ -27,13 +27,12 @@ router.post('/',
   authorization.auth(ROLE.SUPER_ADMIN),
   siteConfigController.createSiteConfig)
 
-
 router.get('/',
   authorization.auth(ROLE.ADMIN, ROLE.SUPER_ADMIN),
   siteConfigController.getSiteConfig)
 
 router.get('/:siteConfigId',
-  siteConfigController.getSiteConfig)
+  siteConfigController.getSiteConfigById)
 
 router.put('/:siteConfigId',
   Cloudinary.upload.fields([

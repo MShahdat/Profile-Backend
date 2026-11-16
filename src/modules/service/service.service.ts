@@ -1,5 +1,6 @@
 import { prisma } from "../../lib/prisma"
 import { IService, IServiceUpdate } from "./service.interface"
+import { AppError } from "../../utility/appError"
 
 
 
@@ -12,7 +13,7 @@ const createService = async (payload: IService) => {
   })
 
   if (ser) {
-    return 'exist'
+    throw new AppError(400, 'Service already exists')
   }
   const result = await prisma.service.create({
     data: {
@@ -44,7 +45,7 @@ const updateService = async (id: string, payload: IServiceUpdate) => {
   })
 
   if (!ser) {
-    return null
+    throw new AppError(404, "Service not found")
   }
   const result = await prisma.service.update({
     where: { id },

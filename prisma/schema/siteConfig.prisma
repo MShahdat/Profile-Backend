@@ -27,10 +27,26 @@ model SiteConfig {
   footerTxt     String?
   footerTagline String?
 
+  github        String?
+  githubIcon    String?
+  linkedin      String?
+  linkedinIcon  String?
+  facebook      String?
+  facebookIcon  String?
+  twitter       String?
+  twitterIcon   String?
+  instagram     String?
+  instagramIcon String?
+  youTube       String?
+  youTubeIcon   String?
+
   primaryColor   String?
   secondaryColor String?
   ternaryColor   String?
-  isPublished    Boolean @default(true)
+
+  isPublished Boolean @default(true)
 
   updatedAt DateTime @updatedAt
+
+  @@map("siteConfig")
 }

@@ -17,8 +17,9 @@ model Project {
   futureImporve    String[]
   stats            Json
   meta             Json
-  isPublished      Boolean  @default(true)
-  order            Int      @default(0)
+
+  isPublished Boolean @default(true)
+  order       Int     @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -26,4 +27,6 @@ model Project {
   technologies ProjectTechnology[]
 
   @@index([categoryId])
+
+  @@map("project")
 }

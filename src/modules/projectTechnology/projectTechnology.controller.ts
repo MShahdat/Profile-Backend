@@ -22,9 +22,7 @@ const getProjectTech = catchAsync(
   async (req: Request, res: Response) => {
 
     const result = await projectTechService.getProjectTech()
-    if (result.length === 0) {
-      return notFoundResponse(res, 'not found')
-    }
+
     return successResponse(res, httpCode.OK, 'project technology retrive successfully', result)
   }
 )
@@ -40,9 +38,7 @@ const updateProjectTech = catchAsync(
     const id = Number(req.params.id)
 
     const result = await projectTechService.updateProjectTech(id, body)
-    if (!result) {
-      return notFoundResponse(res, 'not found')
-    }
+
     return successResponse(res, httpCode.OK, 'project technology retrive successfully', result)
   }
 )

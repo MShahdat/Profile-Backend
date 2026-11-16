@@ -5,6 +5,7 @@ import { catchAsync } from "../utility/catchAsync";
 import { jwtToken } from "../utility/jwt";
 import { ROLE } from "../../generated/prisma/enums";
 import { prisma } from "../lib/prisma";
+import { AppError } from "../utility/appError";
 
 
 
@@ -32,9 +33,7 @@ const auth = (...roles: ROLE[]) => {
     const { id, name, email, role } = decoded;
 
     if (roles.length && !roles.includes(role)) {
-      throw new Error(
-        "Forbidden. You don't have permission to access this resource.",
-      );
+      throw new AppError(403, "Forbidden. You don't have permission to access this resource.");
     }
 
     const admin = await prisma.admin.findUnique({
@@ -47,7 +46,7 @@ const auth = (...roles: ROLE[]) => {
     });
 
     if (!admin) {
-      throw new Error("User not found. Please log in again.");
+      throw new AppError(401, "User not found. Please log in again.");
     }
 
     req.user = {

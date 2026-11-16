@@ -23,9 +23,7 @@ const getCategory = catchAsync(
 
     const result = await categoryService.getCategoryFromDB()
 
-    if (result.length === 0) {
-      return notFoundResponse(res, 'No category available')
-    }
+
     return successResponse(res, httpCode.OK, 'categories retrive successfully', result)
   }
 )

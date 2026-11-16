@@ -12,9 +12,6 @@ const createSkill = catchAsync(
 
     const result = await skillService.createSkill(body)
 
-    if (!result) {
-      return notFoundResponse(res, 'skill category not found')
-    }
     return successResponse(res, httpCode.CREATED, 'skill created successfully', result)
   }
 )
@@ -28,9 +25,6 @@ const getSkill = catchAsync(
     const query = req.query
     const result = await skillService.getSkill(query)
 
-    if (result.length === 0) {
-      return notFoundResponse(res, 'skill not found')
-    }
     return successResponse(res, httpCode.CREATED, 'skill retrive successfully', result)
   }
 )
@@ -45,9 +39,6 @@ const updateSkill = catchAsync(
 
     const result = await skillService.updateSkill(id, body)
 
-    if (!result) {
-      return notFoundResponse(res, 'skill not found')
-    }
     return successResponse(res, httpCode.CREATED, 'skill updated successfully', result)
   }
 )
@@ -57,5 +48,4 @@ export const skillController = {
   createSkill,
   getSkill,
   updateSkill,
-
 }

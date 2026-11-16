@@ -4,11 +4,14 @@ model Service {
   icon        String
   iconColor   String
   bgColor     String
-  title       String  @unique
+  title       String @unique
   description String
+
   order       Int     @default(0)
   isPublished Boolean @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("service")
 }

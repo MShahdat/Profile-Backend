@@ -30,13 +30,14 @@ const createContact = async (payload: IContact) => {
   await transporter.sendMail({
     from: payload.email,
     to: config.smtp_sender,
-    subject: `New Contact Form Message from '${payload.name}'`,
+    subject: `New Contact Message from '${payload.name}'`,
     html: htmlReceive
   })
 
 
   const replyData = {
     name: payload.name,
+    message: payload.message
   }
   const html = await ejs.renderFile(
     path.join(process.cwd(), 'src/templete/replyMail.ejs'),

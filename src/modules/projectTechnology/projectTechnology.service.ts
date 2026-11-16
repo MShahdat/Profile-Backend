@@ -1,5 +1,6 @@
 import { prisma } from "../../lib/prisma"
 import { IPTechnology, IPTechnologyUpdate } from "./projectTechnology.interface"
+import { AppError } from "../../utility/appError"
 
 
 
@@ -13,7 +14,7 @@ const createProjectTech = async (payload: IPTechnology) => {
   })
 
   if (!project) {
-    throw new Error('project not found')
+    throw new AppError(404, 'project not found')
   }
 
   const technology = await prisma.technology.findUnique({
@@ -21,7 +22,7 @@ const createProjectTech = async (payload: IPTechnology) => {
   })
 
   if (!technology) {
-    throw new Error('technology not found')
+    throw new AppError(404, 'technology not found')
   }
 
   const result = await prisma.projectTechnology.create({
@@ -61,7 +62,7 @@ const updateProjectTech = async (id: number, payload: IPTechnologyUpdate) => {
   })
 
   if (!tech) {
-    return null
+    throw new AppError(404, 'technology not found')
   }
 
   const result = await prisma.projectTechnology.update({

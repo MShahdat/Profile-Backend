@@ -1,11 +1,12 @@
 import { prisma } from "../../lib/prisma"
 import { ITool, IToolUpdate } from "./tool.interface"
+import { AppError } from "../../utility/appError"
 
 
 
 //& tool create
-const createTool = async(payload: ITool) => {
-  
+const createTool = async (payload: ITool) => {
+
   const result = await prisma.tool.create({
     data: {
       ...payload
@@ -18,7 +19,7 @@ const createTool = async(payload: ITool) => {
 
 
 //& get all
-const getTools = async() => {
+const getTools = async () => {
   const result = await prisma.tool.findMany({
     orderBy: {
       order: "asc"
@@ -28,18 +29,18 @@ const getTools = async() => {
 }
 
 //& tool update
-const updateTool = async(id: number, payload: IToolUpdate) => {
+const updateTool = async (id: number, payload: IToolUpdate) => {
 
   const tool = await prisma.tool.findUnique({
-    where: {id}
+    where: { id }
   })
 
-  if(!tool){
-    return null
+  if (!tool) {
+    throw new AppError(404, 'tool not found')
   }
-  
+
   const result = await prisma.tool.update({
-    where: {id},
+    where: { id },
     data: {
       ...payload
     }
@@ -53,5 +54,4 @@ export const toolService = {
   createTool,
   getTools,
   updateTool,
-
 }

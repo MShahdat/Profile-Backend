@@ -11,9 +11,7 @@ const createService = catchAsync(
     const body = req.body
 
     const result = await serviceService.createService(body)
-    if (result === 'exist') {
-      return badResponse(res, 'this service alreay exist')
-    }
+
     return successResponse(res, httpCode.CREATED, 'service created successfully', result)
   }
 )
@@ -24,9 +22,7 @@ const getService = catchAsync(
   async (req: Request, res: Response) => {
 
     const result = await serviceService.getService()
-    if (result.length === 0) {
-      return notFoundResponse(res, 'no service created')
-    }
+
     return successResponse(res, httpCode.OK, 'service retrive successfully', result)
   }
 )
@@ -40,9 +36,6 @@ const updateService = catchAsync(
 
     const result = await serviceService.updateService(id, body)
 
-    if (!result) {
-      return notFoundResponse(res, 'service not found')
-    }
     return successResponse(res, httpCode.OK, 'service updated successfully', result)
   }
 )

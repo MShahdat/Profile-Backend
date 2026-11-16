@@ -1,15 +1,16 @@
-
 model ProjectTechnology {
   id           Int        @id @default(autoincrement())
   projectId    String
   project      Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
   technologyId Int
   technology   Technology @relation(fields: [technologyId], references: [id], onDelete: Cascade)
-  order        Int        @default(0)
-  isPublished  Boolean    @default(true)
+
+  order       Int     @default(0)
+  isPublished Boolean @default(true)
 
   updatedAt DateTime @updatedAt
 
   @@index([projectId])
   @@index([technologyId])
+  @@map("projectTechnology")
 }

@@ -10,7 +10,7 @@ const createContact = catchAsync(
     const body = req.body
 
     const result = await contactService.createContact(body)
-    return successResponse(res, httpCode.CREATED, 'new contact created successfully', result)
+    return successResponse(res, httpCode.CREATED, 'Message Sent successfully', result)
   }
 )
 
@@ -21,9 +21,6 @@ const getContact = catchAsync(
 
     const result = await contactService.getContact()
 
-    if (result.length === 0) {
-      return notFoundResponse(res, 'no contact found')
-    }
     return successResponse(res, httpCode.OK, 'contacts retrived successfully', result)
   }
 )

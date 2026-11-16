@@ -2,6 +2,7 @@ import { UploadApiResponse } from "cloudinary"
 import { Cloudinary } from "../../lib/cloudinary"
 import { prisma } from "../../lib/prisma"
 import { IProject, IProjectUpdate } from "./project.interface"
+import { AppError } from "../../utility/appError"
 
 
 
@@ -15,7 +16,7 @@ const createProjectInto = async (payload: IProject, cover: Express.Multer.File, 
   })
 
   if (isProject) {
-    throw new Error('this project alrady exist. used different title')
+    throw new AppError(400, 'this project alrady exist. used different title')
   }
 
   const coverRes = await new Promise<UploadApiResponse>((resolve, reject) => {
@@ -79,10 +80,19 @@ const createProjectInto = async (payload: IProject, cover: Express.Multer.File, 
 
 
 
-//& get profects
+//& get projects
 const getProjectsFromDB = async () => {
   const result = await prisma.project.findMany({
+    where: {
+      isPublished: true
+    },
     include: {
+      category: {
+        select: {
+          id: true,
+          title: true,
+        }
+      },
       technologies: {
         select: {
           technology: {
@@ -133,7 +143,7 @@ const updateProjectInto = async (id: string, payload: IProjectUpdate, cover: Exp
   })
 
   if (!isProject) {
-    return null
+    throw new AppError(404, "Project not found")
   }
 
   const coverRes = cover ? await new Promise<UploadApiResponse>((resolve, reject) => {

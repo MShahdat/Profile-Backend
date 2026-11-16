@@ -23,9 +23,6 @@ const getEducation = catchAsync(
 
     const result = await educationService.getEducation()
 
-    if (result.length === 0) {
-      return notFoundResponse(res, 'no education added yet')
-    }
     return successResponse(res, httpCode.OK, 'education retrived successfully', result)
   }
 )
@@ -40,9 +37,6 @@ const updateEducation = catchAsync(
 
     const result = await educationService.updateEducation(id, body)
 
-    if (!result) {
-      return notFoundResponse(res, 'education not found')
-    }
     return successResponse(res, httpCode.OK, 'education updated successfully', result)
   }
 )

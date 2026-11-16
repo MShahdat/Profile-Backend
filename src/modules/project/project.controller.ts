@@ -3,9 +3,10 @@ import { catchAsync } from "../../utility/catchAsync";
 import { projectService } from "./project.service";
 import { badResponse, notFoundResponse, successResponse } from "../../utility/sendResponse";
 import httpCode from 'http-status'
+import { AppError } from "../../utility/appError"
 
 
-
+//& CREATE 
 const createProject = catchAsync(
   async (req: Request, res: Response) => {
 
@@ -15,7 +16,7 @@ const createProject = catchAsync(
     const images = files?.['images'] || [];
 
     if (!req.body.data || !cover) {
-      throw new Error('invalid form data')
+      throw new AppError(400, 'invalid form data')
     }
     let data = JSON.parse(req.body.data)
 
@@ -26,14 +27,12 @@ const createProject = catchAsync(
 )
 
 
-
+//& GET ALL
 const getProject = catchAsync(
   async (req: Request, res: Response) => {
 
     const result = await projectService.getProjectsFromDB()
-    if (result.length === 0) {
-      return notFoundResponse(res, 'project not available')
-    }
+
     return successResponse(res, httpCode.OK, 'project retrive successfully', result)
   }
 )
@@ -47,9 +46,6 @@ const getProjectById = catchAsync(
 
     const result = await projectService.getProjectByIdFromDB(id)
 
-    if (!result) {
-      return notFoundResponse(res, 'project not found')
-    }
     return successResponse(res, httpCode.OK, 'project retrive successfully', result)
   }
 )
@@ -67,15 +63,12 @@ const updateProject = catchAsync(
     const images = files?.['images'] || [];
 
     if (!req.body.data) {
-      throw new Error('invalid form data')
+      throw new AppError(400, 'invalid form data')
     }
     let data = JSON.parse(req.body.data)
 
     const result = await projectService.updateProjectInto(id, data, cover!, images!)
 
-    if (!result) {
-      return notFoundResponse(res, 'project not found')
-    }
     return successResponse(res, httpCode.OK, 'project updated successfully', result)
   }
 )

@@ -2,6 +2,7 @@ import { UploadApiResponse } from "cloudinary"
 import { Cloudinary } from "../../lib/cloudinary"
 import { prisma } from "../../lib/prisma"
 import { ISiteConfigFormPayload } from "./siteConfig.interface"
+import { AppError } from "../../utility/appError"
 
 
 //& CREATE
@@ -100,6 +101,10 @@ const getSiteConfigById = async (id: string) => {
     where: { id }
   });
 
+  if (!siteCongig) {
+    throw new AppError(404, 'config not found')
+  }
+
   return siteCongig
 }
 
@@ -113,7 +118,7 @@ const updateSiteConfig = async (payload: any, id: string) => {
   })
 
   if (!siteConfig) {
-    throw new Error('site config not found')
+    throw new AppError(404, 'site config not found')
   }
 
   // Only upload if the file was actually sent
@@ -171,7 +176,7 @@ const updateSiteConfig = async (payload: any, id: string) => {
   const updatedSiteConfig = await prisma.siteConfig.update({
     where: { id },
     data: {
-      ...payload.data,
+      ...(payload.data ? payload.data : {}),
       ...(imageResponse && {
         image: imageResponse.secure_url,
         imagePublicId: imageResponse.public_id

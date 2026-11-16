@@ -1,5 +1,6 @@
 import { prisma } from "../../lib/prisma"
 import { IEducation } from "./education.interface"
+import { AppError } from "../../utility/appError"
 
 
 
@@ -35,7 +36,7 @@ const updateEducation = async (id: number, payload: IEducation) => {
   })
 
   if (!edu) {
-    return null
+    throw new AppError(404, "Eduction not found")
   }
 
   const updated = await prisma.education.update({
@@ -55,5 +56,4 @@ export const educationService = {
   createEducation,
   getEducation,
   updateEducation,
-
 }

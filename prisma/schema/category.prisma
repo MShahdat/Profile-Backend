@@ -1,12 +1,16 @@
 model Category {
   id Int @id @default(autoincrement())
 
-  title String
-  icon  String?
-  order Int     @default(0)
+  title       String  @unique
+  icon        String?
+  order       Int     @default(0)
+  isPublished Boolean @default(true)
 
   createddAt DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
   project Project[]
+  skill   Skill[]
+
+  @@map("category")
 }

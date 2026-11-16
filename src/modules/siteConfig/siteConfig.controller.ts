@@ -3,6 +3,7 @@ import { catchAsync } from "../../utility/catchAsync";
 import { siteConfigService } from "./siteConfig.service";
 import { notFoundResponse, successResponse } from "../../utility/sendResponse";
 import httpStatus from 'http-status'
+import { AppError } from "../../utility/appError"
 
 //& CREATE
 const createSiteConfig = catchAsync(
@@ -15,7 +16,7 @@ const createSiteConfig = catchAsync(
     const cv = files?.['cv']?.[0]
 
     if (!req.body.data || !image || !resume || !cv) {
-      throw new Error('invalid form data')
+      throw new AppError(400, 'invalid form data')
     }
     let data = JSON.parse(req.body.data)
 
@@ -33,10 +34,7 @@ const getSiteConfig = catchAsync(
   async (req: Request, res: Response) => {
     const result = await siteConfigService.getSiteConfig()
 
-    if (result.length === 0) {
-      return notFoundResponse(res)
-    }
-    return successResponse(res, httpStatus.OK, 'site config retrive successfully', result)
+    return successResponse(res, httpStatus.OK, 'Configs retrive successfully', result)
   }
 )
 
@@ -47,9 +45,6 @@ const getSiteConfigById = catchAsync(
     const id = req.params.siteConfigId as string
     const result = await siteConfigService.getSiteConfigById(id)
 
-    if (!result) {
-      return notFoundResponse(res)
-    }
     return successResponse(res, httpStatus.OK, 'site config retrive successfully', result)
   }
 )
@@ -67,10 +62,12 @@ const updateSiteConfig = catchAsync(
     const resume = files?.['resume']?.[0];
     const cv = files?.['cv']?.[0]
 
-    if (!req.body?.data) {
-      throw new Error('invalid form data')
+    if (!req.body?.data && !image && !resume && !cv) {
+      throw new AppError(400, 'invalid form data')
     }
-    let data = JSON.parse(req.body.data)
+
+    let data = req.body.data ? JSON.parse(req.body.data) : undefined
+
     const payload = {
       data,
       image,

@@ -1,7 +1,7 @@
 import { Prisma } from "../../../generated/prisma/client"
 import { prisma } from "../../lib/prisma"
-import { notFoundResponse } from "../../utility/sendResponse"
 import { ISkill, ISkillUpdate, SkillQuery } from "./skill.interface"
+import { AppError } from "../../utility/appError"
 
 
 
@@ -9,12 +9,12 @@ import { ISkill, ISkillUpdate, SkillQuery } from "./skill.interface"
 const createSkill = async (payload: ISkill) => {
   const { categoryId } = payload
 
-  const category = prisma.skillCategory.findUnique({
+  const category = prisma.category.findUnique({
     where: { id: categoryId }
   })
 
   if (!category) {
-    return null
+    throw new AppError(404, 'Category Not found')
   }
 
   const result = await prisma.skill.create({
@@ -39,8 +39,8 @@ const getSkill = async (query: SkillQuery) => {
 
   if (query.type) {
     andCondition.push({
-      skillCategory: {
-        type: query.type
+      category: {
+        title: query.type
       }
     })
   }
@@ -50,7 +50,12 @@ const getSkill = async (query: SkillQuery) => {
       AND: andCondition
     },
     include: {
-      skillCategory: true
+      category: {
+        select: {
+          title: true,
+          isPublished: true
+        }
+      }
     },
     orderBy: {
       [sort]: sortOrder

@@ -5,18 +5,21 @@ import { ADMIN, LOGIN } from "./auth.interface"
 import bcrypt from 'bcrypt'
 import { JwtPayload, SignOptions } from "jsonwebtoken"
 import jwt from "jsonwebtoken"
+import { AppError } from "../../utility/appError"
 
 
 //& ADMIN REGISTER
 const adminRegisterIntoDB = async (payload: ADMIN) => {
   const { email, password } = payload
 
-  const isAdmin = await prisma.admin.findUnique({
-    where: { email }
+  const isAdmin = await prisma.admin.findFirst({
+    where: {
+      role: "ADMIN"
+    }
   })
 
   if (isAdmin) {
-    throw new Error("User already exist!")
+    throw new AppError(400, "Admin already exist!")
   }
 
   const hasPass = await bcrypt.hash(password as string, Number(config.solt_or_rounds))

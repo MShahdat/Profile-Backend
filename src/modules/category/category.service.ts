@@ -1,5 +1,6 @@
 import { prisma } from "../../lib/prisma"
 import { ICategoy } from "./category.interface"
+import { AppError } from "../../utility/appError"
 
 
 
@@ -23,9 +24,21 @@ const createCategoryIntoDB = async (payload: ICategoy) => {
 //& get category
 const getCategoryFromDB = async () => {
   const result = await prisma.category.findMany({
+    include: {
+      skill: {
+        orderBy: {
+          order: "asc"
+        },
+        omit: {
+          isPublished: true,
+          createdAt: true,
+          uddatedAt: true
+        }
+      }
+    },
     orderBy: {
       order: "asc"
-    }
+    },
   })
   return result
 }
@@ -39,7 +52,7 @@ const updateCategoryIntoDB = async (id: number, payload: ICategoy) => {
   })
 
   if (!isCat) {
-    return null
+    throw new AppError(404, "Category not found")
   }
 
   const result = await prisma.category.update({

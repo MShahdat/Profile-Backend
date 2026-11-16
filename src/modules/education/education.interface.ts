@@ -1,7 +1,8 @@
 
+type eduType = "CERTIFICATION" | "EDUCATION"
 
 export interface IEducation {
-  type: string
+  type: eduType
   year: string
   dateRange: string
   degree: string
